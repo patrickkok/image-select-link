@@ -1,5 +1,4 @@
-import RectangleSelection from "react-rectangle-selection";
-import RectangleSelect from "./components/RectangleSelectTouch.js";
+import RectangleSelectTouch from "./components/RectangleSelectTouch.js";
 
 import { useState, useEffect } from "react";
 
@@ -48,7 +47,7 @@ function App() {
         <p>To test the image select idea</p>
         <span>{origin + " , " + target + " , " + limit}</span>
         <span>{[newBox.topLeft, newBox.width, newBox.height]}</span>
-        <RectangleSelect
+        <RectangleSelectTouch
           onSelect={(e, coords) => {
             const dim = e.target.getBoundingClientRect();
             setOrigin(coords.origin);
@@ -63,7 +62,7 @@ function App() {
           style={{ backgroundColor: "grey", borderColor: "black" }}
         >
           <div className="test-div">{rooms}</div>
-        </RectangleSelect>
+        </RectangleSelectTouch>
         <button onClick={handleClick}>ok</button>
       </header>
     </div>
