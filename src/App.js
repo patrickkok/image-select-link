@@ -14,15 +14,20 @@ function App() {
   ]);
   const [boxes, setBoxes] = useState([]);
   const [newBox, setNewBox] = useState({
-    topLeft: [0, 0],
-    width: 0,
-    height: 0,
+    topLeft: [-1, -1],
+    width: -1,
+    height: -1,
   });
 
   const handleClick = () => {
     const newBoxes = [...boxes];
     newBoxes.push(newBox);
     setBoxes(newBoxes);
+    setNewBox({
+      topLeft: [-1, -1],
+      width: -1,
+      height: -1,
+    });
   };
 
   const rooms = boxes.map((room, index) => (
@@ -40,6 +45,24 @@ function App() {
     ></div>
   ));
 
+  const boxInProg = () => {
+    if (newBox.height > 0) {
+      return (
+        <div
+          className="room"
+          style={Object.assign({
+            zIndex: 10,
+            left: newBox.topLeft[0],
+            top: newBox.topLeft[1],
+            height: newBox.height,
+            width: newBox.width,
+            userSelect: "none",
+          })}
+        ></div>
+      );
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -49,7 +72,6 @@ function App() {
         <span>{[newBox.topLeft, newBox.width, newBox.height]}</span>
         <RectangleSelectTouch
           onSelect={(e, coords) => {
-            const dim = e.target.getBoundingClientRect();
             setOrigin(coords.origin);
             setTarget(coords.target);
             setLimit(coords.limit);
@@ -61,7 +83,10 @@ function App() {
           }}
           style={{ backgroundColor: "grey", borderColor: "black" }}
         >
-          <div className="test-div">{rooms}</div>
+          <div className="test-div">
+            {rooms}
+            {boxInProg()}
+          </div>
         </RectangleSelectTouch>
         <button onClick={handleClick}>ok</button>
       </header>

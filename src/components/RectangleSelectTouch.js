@@ -197,13 +197,13 @@ const ReactRectangleSelection = (props) => {
         }
       }}
     >
-      {selectionBox && (
+      {/* {selectionBox && (
         <div
           className={`react-rectangle-selection ${animation}`}
           id={"react-rectangle-selection"}
           style={Object.assign(baseStyle, props.style)}
         />
-      )}
+      )} */}
       {props.children}
     </div>
   );
