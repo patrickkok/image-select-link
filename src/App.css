@@ -28,15 +28,15 @@
   color: #61dafb;
 }
 
-.test-div {
-  width: 600px;
-  height: 400px;
-  background-color: white;
+.container {
   position: relative;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .room {
   position: absolute;
+  z-index: 10;
   background-color: grey;
   border: 2px solid;
   border-color: black;

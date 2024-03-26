@@ -10,6 +10,7 @@ const ReactRectangleSelection = (props) => {
   const [selectionBoxLimit, setSelectionBoxLimit] = useState([
     [0, 0],
     [0, 0],
+    [0, 0],
   ]);
   const [animation, setAnimation] = useState("");
 
@@ -69,6 +70,7 @@ const ReactRectangleSelection = (props) => {
         target.offsetLeft + target.offsetWidth,
         target.offsetTop + target.offsetHeight,
       ],
+      [target.offsetWidth, target.offsetHeight],
     ]);
   };
 
@@ -103,19 +105,34 @@ const ReactRectangleSelection = (props) => {
         target.offsetLeft + target.offsetWidth,
         target.offsetTop + target.offsetHeight,
       ],
+      [target.offsetWidth, target.offsetHeight],
     ]);
   };
 
   const calculateRoomDivParams = () => {
-    const topLeft = [
-      Math.min(selectionBoxOrigin[0], selectionBoxTarget[0]) -
-        selectionBoxLimit[0][0],
-      Math.min(selectionBoxOrigin[1], selectionBoxTarget[1]) -
-        selectionBoxLimit[0][1],
-    ];
-    const absWidth = Math.abs(selectionBoxOrigin[0] - selectionBoxTarget[0]);
-    const absHeight = Math.abs(selectionBoxOrigin[1] - selectionBoxTarget[1]);
-    return { topLeft: topLeft, width: absWidth - 1, height: absHeight - 1 };
+    const leftPercent =
+      ((Math.min(selectionBoxOrigin[0], selectionBoxTarget[0]) -
+        selectionBoxLimit[0][0]) *
+        100) /
+      selectionBoxLimit[2][0];
+    const topPercent =
+      ((Math.min(selectionBoxOrigin[1], selectionBoxTarget[1]) -
+        selectionBoxLimit[0][1]) *
+        100) /
+      selectionBoxLimit[2][1];
+
+    const topLeft = [leftPercent, topPercent];
+    const absWidthPercent =
+      (Math.abs(selectionBoxOrigin[0] - selectionBoxTarget[0]) * 100) /
+      selectionBoxLimit[2][0];
+    const absHeightPercent =
+      (Math.abs(selectionBoxOrigin[1] - selectionBoxTarget[1]) * 100) /
+      selectionBoxLimit[2][1];
+    return {
+      topLeft: topLeft,
+      width: absWidthPercent - 0.1,
+      height: absHeightPercent - 0.1,
+    };
   };
 
   const baseStyle = {
